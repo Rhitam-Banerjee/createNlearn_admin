@@ -87,6 +87,10 @@ const CourseGrid = ({ courses = [] }) => {
               key={index}
               className="p-4 flex flex-col justify-start items-start gap-[10px] bg-lightGrey rounded-[5px] shadow-2xl"
             >
+              <div className="flex flex-row justify-between items-center w-full">
+                <span className="text-mainColor font-bold">Course ID</span>
+                <span className="font-black">{singleClass.id}</span>
+              </div>
               <div className="flex flex-row items-center gap-[15px]">
                 <div>
                   <img src={Logo} className="w-[30px]" alt="" />
