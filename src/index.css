@@ -1,0 +1,25 @@
+@import "tailwindcss";
+@theme {
+  --color-mainColor: #3b72ff;
+  --color-mainColorTransparent: #3b72ff80;
+  --color-mainColorLight: #d6e2ff;
+  --color-mainColorLightTransparent: #d6e2ff80;
+  --color-secondary: #ff9f30;
+  --color-secondaryTransparent: #ff9f3080;
+  --color-secondaryLight: #fff1e0;
+  --color-secondaryLightTransparent: #fff1e080;
+  --color-lightGrey: #f5f5f5;
+  --color-unHighlight: #ececec;
+  --color-unHighlightLight: #ababab;
+  --color-unHighlightDark: #9c9b9b;
+  --color-successGreen: #29996b;
+  --color-successGreenLight: #81ff9d50;
+  --color-errorRed: #b60000;
+  --color-errorRedLight: #ff8d8d50;
+  --color-errorRedLighter: #eb5757;
+}
+input,
+textarea,
+select {
+  background-color: white !important;
+}
