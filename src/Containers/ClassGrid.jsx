@@ -52,7 +52,7 @@ const ClassGrid = () => {
             })}
           </select>
         </div>
-        {allTeachers?.length && (
+        {allTeachers?.length > 0 && (
           <div className="flex flex-row justify-start items-center gap-[10px]">
             <span>Teachers</span>
             <select
@@ -80,7 +80,6 @@ const ClassGrid = () => {
       >
         Schedule Extra Class/PTM
       </Link>
-      <div>Hello</div>
       <div className="grid grid-cols-3 gap-4 text-[12px] font-semibold">
         {allClasses?.map((singleClass, index) => {
           return (
