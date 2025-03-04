@@ -29,6 +29,12 @@ const AddTeacher = () => {
     pan_card_number: "",
     days: [0, 0, 0, 0, 0, 0, 0],
     slots: [0, 0, 0, 0, 0, 0, 0, 0],
+    subjects: {
+      English: 0,
+      Maths: 0,
+      Minecraft: 0,
+      Coding: 0,
+    },
   });
 
   const createTeacher = async () => {
@@ -62,6 +68,12 @@ const AddTeacher = () => {
       pan_card_number: "",
       days: [0, 0, 0, 0, 0, 0, 0],
       slots: [0, 0, 0, 0, 0, 0, 0, 0],
+      subjects: {
+        English: 0,
+        Maths: 0,
+        Minecraft: 0,
+        Coding: 0,
+      },
     });
   }, []);
   return (
@@ -201,6 +213,39 @@ const AddTeacher = () => {
                 >
                   <option value={0}>Not Available</option>
                   <option value={1}>Available</option>
+                </select>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="h-full flex flex-col justify-start items-start gap-[20px] p-4 bg-mainColorLightTransparent rounded-[5px]">
+          <span className="font-bold text-[20px] text-white">
+            Subject Choice
+          </span>
+          {Object.keys(formValues.subjects).map((subject, index) => {
+            return (
+              <div
+                key={index}
+                className="flex flex-row justify-start items-center gap-[20px]"
+              >
+                <span className="w-[130px]">{subject}</span>
+                <select
+                  className="p-1 rounded-[5px]"
+                  value={formValues.subjects[subject]}
+                  onChange={({ target: { value } }) => {
+                    let newSubjects = formValues.subjects;
+                    newSubjects[subject] = value;
+                    setFormValues({
+                      ...formValues,
+                      subjects: newSubjects,
+                    });
+                  }}
+                >
+                  <option value={0}>Not Interested</option>
+                  <option value={1}>Beginner</option>
+                  <option value={2}>Intermediate</option>
+                  <option value={3}>Expert</option>
                 </select>
               </div>
             );
