@@ -9,7 +9,7 @@ const DashboardSidesheet = () => {
   const { role } = admin;
 
   return (
-    <div className="fixed top-[100px] left-0 w-[200px] h-full bg-gray-50 font-bold flex flex-col justify-start items-start">
+    <div className="fixed top-[60px] left-0 w-[200px] h-full min-h-[calc(100vh-60px)] bg-gray-50 font-bold flex flex-col justify-start items-start">
       {["Courses", "Teachers"].map((item, index) => {
         return (
           <span

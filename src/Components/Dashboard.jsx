@@ -19,7 +19,7 @@ const Dashboard = () => {
     getAllTeacher();
   }, []);
   return (
-    <div className="bg-gray-200 pt-[100px] w-full flex flex-row justify-start items-center">
+    <div className="bg-gray-200 mt-[60px] w-full flex flex-row justify-start items-center">
       <DashboardSidesheet />
       <DashboardMain />
     </div>

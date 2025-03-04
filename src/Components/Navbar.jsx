@@ -9,9 +9,9 @@ const Navbar = () => {
   const { adminId, name, role } = admin;
 
   return (
-    <section className="fixed top-0 h-[100px] w-full flex flex-row justify-between items-center gap-[20px] px-8 bg-white shadow-2xl z-50">
+    <section className="fixed top-0 h-[60px] w-full flex flex-row justify-between items-center gap-[20px] px-8 bg-white shadow-2xl z-50">
       <Link to="/">
-        <img src={Logo} className="w-[50px]" alt="" />
+        <img src={Logo} className="w-[30px]" alt="" />
       </Link>
       {/* <button
         className="bg-errorRed p-3 rounded-[5px] text-white font-bold"

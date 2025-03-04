@@ -12,5 +12,7 @@ const urls = {
   createCourse: `${subDomain}/create-course`,
   createNewClass: `${subDomain}/create-new-classes`,
   createExistingClass: `${subDomain}/create-existing-classes`,
+
+  getTeacherAvailable: `${subDomain}/check-teacher-availibility`,
 };
 export default urls;

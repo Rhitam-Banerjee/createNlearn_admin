@@ -6,6 +6,8 @@ import urls from "../utils/urls";
 const NewClass = () => {
   const navigate = useNavigate();
   const [otherValue, setOtherValue] = useState("");
+  const [availableTeachers, setAvailableTeachers] = useState([]);
+  const [availibilityChecked, setAvailibilityChecked] = useState(false);
   const courseTypes = ["English", "Maths", "Coding", "Minecraft", "Music"];
   const [courseRelevant, setCourseRelevant] = useState([
     "KG",
@@ -32,6 +34,10 @@ const NewClass = () => {
     courseRelevant: "KG",
     courseLevel: "Beginner",
     courseLocation: "India",
+    classCount: 1,
+    timeStart: "",
+    timeEnd: "",
+    teacher: "",
   });
 
   const createCourse = async () => {
@@ -49,6 +55,21 @@ const NewClass = () => {
       .catch((err) => console.log(err));
     if (response && response.status) {
       navigate("/");
+    }
+  };
+
+  const checkTeacherAvailibility = async () => {
+    try {
+      const response = await axios
+        .get(`${urls.getTeacherAvailable}?course_details=${formValues}`)
+        .then((res) => res.data)
+        .catch((err) => console.log(err));
+      if (response && response.status) {
+        setAvailableTeachers(response.teachers);
+        setAvailibilityChecked(true);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -157,14 +178,75 @@ const NewClass = () => {
           })}
         </select>
       </div>
-
       <div className="flex flex-row justify-start items-center gap-[20px]">
-        <div
-          className="px-4 py-2 bg-successGreen text-white rounded-[5px]"
-          onClick={() => createCourse()}
-        >
-          Create
+        <span className="w-[200px]">Number of Classes</span>
+        <input
+          placeholder="Name"
+          className="p-2 rounded-[5px] outline-none"
+          type="number"
+          value={formValues.classCount}
+          onChange={({ target: { value } }) =>
+            setFormValues({ ...formValues, classCount: value })
+          }
+        />
+      </div>
+      <div className="flex flex-row justify-start items-center gap-[20px]">
+        <span className="w-[200px]">Class Start</span>
+        <input
+          className="p-2 rounded-[5px] outline-none"
+          type="time"
+          value={formValues.timeStart}
+          onChange={({ target: { value } }) =>
+            setFormValues({ ...formValues, timeStart: value })
+          }
+        />
+      </div>
+      <div className="flex flex-row justify-start items-center gap-[20px]">
+        <span className="w-[200px]">Class End</span>
+        <input
+          className="p-2 rounded-[5px] outline-none"
+          type="time"
+          value={formValues.timeEnd}
+          onChange={({ target: { value } }) =>
+            setFormValues({ ...formValues, timeEnd: value })
+          }
+        />
+      </div>
+      <div
+        className="text-white font-bold bg-secondary p-2 rounded-[5px] cursor-pointer"
+        onClick={() => checkTeacherAvailibility()}
+      >
+        Check Teacher Availability
+      </div>
+      {availibilityChecked && (
+        <div className="flex flex-row justify-start items-center gap-[20px]">
+          <span className="w-[200px]">Teachers Available</span>
+          <select
+            value={formValues.teacher}
+            className="p-2 rounded-[5px] outline-none"
+            onChange={({ target: { value } }) =>
+              setFormValues({ ...formValues, teacher: value })
+            }
+          >
+            {availableTeachers.map((teacher, index) => {
+              return (
+                <option value={teacher} key={index}>
+                  {teacher}
+                </option>
+              );
+            })}
+          </select>
         </div>
+      )}
+      <div className="flex flex-row justify-start items-center gap-[20px]">
+        {availibilityChecked && (
+          <div
+            className="px-4 py-2 bg-successGreen text-white rounded-[5px]"
+            onClick={() => createCourse()}
+          >
+            Create
+          </div>
+        )}
         <div
           className="px-4 py-2 bg-errorRed text-white rounded-[5px]"
           onClick={() => {

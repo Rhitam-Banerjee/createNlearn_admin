@@ -5,7 +5,7 @@ const CreateCourse = () => {
 
   return (
     <div className="bg-gray-200 p-6 pt-[130px] text-[15px] w-full flex flex-col justify-start items-start">
-      <div className="w-max m-auto text-[20px] font-bold">Create Class</div>
+      <div className="w-max m-auto text-[20px] font-bold">Create Course</div>
       <div className="py-[30px] flex flex-row justify-start items-center gap-[20px]">
         <span
           className={`${

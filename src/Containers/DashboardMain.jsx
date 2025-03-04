@@ -22,7 +22,7 @@ const DashboardMain = () => {
     getAllTeacher();
   }, []);
   return (
-    <div className="ml-[200px] w-full h-full p-[50px] pt-[20px]">
+    <div className="ml-[200px] w-full h-full min-h-[calc(100vh-60px)] p-[50px]">
       {activePage === "Courses" ? (
         <>
           <CourseGrid courses={allCourses} />
