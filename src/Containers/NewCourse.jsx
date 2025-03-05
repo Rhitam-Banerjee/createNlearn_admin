@@ -3,8 +3,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import urls from "../utils/urls";
-const NewClass = () => {
+const NewCourse = () => {
   const navigate = useNavigate();
+  const [missingValues, setMissingValues] = useState(false);
   const [otherValue, setOtherValue] = useState("");
   const [availableTeachers, setAvailableTeachers] = useState([]);
   const [availibilityChecked, setAvailibilityChecked] = useState(false);
@@ -30,17 +31,30 @@ const NewClass = () => {
 
   const [formValues, setFormValues] = useState({
     name: "",
-    courseType: "English",
+    subject: "English",
     courseRelevant: "KG",
     courseLevel: "Beginner",
     courseLocation: "India",
-    classCount: 1,
-    timeStart: "",
-    timeEnd: "",
+    duration_days: 1,
+    start_date: "",
+    time_start: "",
+    time_end: "",
     teacher: "",
+    frequency: "daily",
   });
 
   const createCourse = async () => {
+    const { name, start_date, time_start, time_end, teacher } = formValues;
+    if (
+      name == "" ||
+      start_date == "" ||
+      time_start == "" ||
+      time_end == "" ||
+      teacher == ""
+    ) {
+      setMissingValues(true);
+      return false;
+    }
     const response = await axios
       .post(
         `${urls.createCourse}?course_details=${JSON.stringify(
@@ -59,6 +73,13 @@ const NewClass = () => {
   };
 
   const checkTeacherAvailibility = async () => {
+    const { name, start_date, time_start, time_end, teacher } = formValues;
+
+    if (name == "" || start_date == "" || time_start == "" || time_end == "") {
+      setMissingValues(true);
+      return false;
+    }
+
     try {
       const response = await axios
         .get(
@@ -71,6 +92,7 @@ const NewClass = () => {
       if (response && response.status) {
         setAvailableTeachers(response.teachers);
         setAvailibilityChecked(true);
+        setMissingValues(false);
       }
     } catch (error) {
       console.log(error);
@@ -80,10 +102,16 @@ const NewClass = () => {
   useEffect(() => {
     setFormValues({
       name: "",
-      courseType: "English",
+      subject: "English",
       courseRelevant: "KG",
       courseLevel: "Beginner",
       courseLocation: "India",
+      duration_days: 1,
+      start_date: "",
+      time_start: "",
+      time_end: "",
+      teacher: "",
+      frequency: "daily",
     });
   }, []);
   return (
@@ -103,10 +131,10 @@ const NewClass = () => {
       <div className="flex flex-row justify-start items-center gap-[20px]">
         <span className="w-[200px]">Course Type</span>
         <select
-          value={formValues.courseType}
+          value={formValues.subject}
           className="p-2 rounded-[5px] outline-none"
           onChange={({ target: { value } }) =>
-            setFormValues({ ...formValues, courseType: value })
+            setFormValues({ ...formValues, subject: value })
           }
         >
           {courseTypes.map((type, index) => {
@@ -183,14 +211,26 @@ const NewClass = () => {
         </select>
       </div>
       <div className="flex flex-row justify-start items-center gap-[20px]">
+        <span className="w-[200px]">Start date</span>
+        <input
+          placeholder="Start Date"
+          className="p-2 rounded-[5px] outline-none"
+          type="date"
+          value={formValues.start_date}
+          onChange={({ target: { value } }) =>
+            setFormValues({ ...formValues, start_date: value })
+          }
+        />
+      </div>
+      <div className="flex flex-row justify-start items-center gap-[20px]">
         <span className="w-[200px]">Number of Classes</span>
         <input
           placeholder="Name"
           className="p-2 rounded-[5px] outline-none"
           type="number"
-          value={formValues.classCount}
+          value={formValues.duration_days}
           onChange={({ target: { value } }) =>
-            setFormValues({ ...formValues, classCount: value })
+            setFormValues({ ...formValues, duration_days: value })
           }
         />
       </div>
@@ -199,9 +239,9 @@ const NewClass = () => {
         <input
           className="p-2 rounded-[5px] outline-none"
           type="time"
-          value={formValues.timeStart}
+          value={formValues.time_start}
           onChange={({ target: { value } }) =>
-            setFormValues({ ...formValues, timeStart: value })
+            setFormValues({ ...formValues, time_start: value })
           }
         />
       </div>
@@ -210,11 +250,24 @@ const NewClass = () => {
         <input
           className="p-2 rounded-[5px] outline-none"
           type="time"
-          value={formValues.timeEnd}
+          value={formValues.time_end}
           onChange={({ target: { value } }) =>
-            setFormValues({ ...formValues, timeEnd: value })
+            setFormValues({ ...formValues, time_end: value })
           }
         />
+      </div>
+      <div className="flex flex-row justify-start items-center gap-[20px]">
+        <span className="w-[200px]">Class Frequency</span>
+        <select
+          value={formValues.frequency}
+          className="p-2 rounded-[5px] outline-none"
+          onChange={({ target: { value } }) =>
+            setFormValues({ ...formValues, frequency: value })
+          }
+        >
+          <option value={"daily"}>Daily</option>
+          <option value={"weekly"}>Weekly</option>
+        </select>
       </div>
       <div
         className="text-white font-bold bg-secondary p-2 rounded-[5px] cursor-pointer"
@@ -222,7 +275,7 @@ const NewClass = () => {
       >
         Check Teacher Availability
       </div>
-      {availibilityChecked && (
+      {availibilityChecked && availableTeachers.length > 0 && (
         <div className="flex flex-row justify-start items-center gap-[20px]">
           <span className="w-[200px]">Teachers Available</span>
           <select
@@ -240,6 +293,16 @@ const NewClass = () => {
               );
             })}
           </select>
+        </div>
+      )}
+      {availableTeachers.length == 0 && availibilityChecked && (
+        <div className="text-errorRed font-bold text-[15px]">
+          No Teachers Available
+        </div>
+      )}
+      {missingValues && (
+        <div className="text-errorRed font-bold text-[15px]">
+          Details missing
         </div>
       )}
       <div className="flex flex-row justify-start items-center gap-[20px]">
@@ -264,4 +327,4 @@ const NewClass = () => {
   );
 };
 
-export default NewClass;
+export default NewCourse;
