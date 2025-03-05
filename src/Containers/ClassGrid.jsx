@@ -31,9 +31,7 @@ const ClassGrid = () => {
   return (
     <div className="mt-[50px] flex flex-col gap-[10px]">
       <div className="flex flex-row justify-start items-center gap-[20px]">
-        <span className="text-[20px] font-bold pb-[10px]">
-          Upcomming Classes
-        </span>
+        <span className="text-[20px] font-bold pb-[10px]">Classes</span>
         <div className="ml-auto flex flex-row justify-start items-center gap-[10px]">
           <span>Class Type</span>
           <select
