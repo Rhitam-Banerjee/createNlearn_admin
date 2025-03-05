@@ -85,50 +85,43 @@ const ClassGrid = () => {
               key={index}
               className="p-4 flex flex-col justify-start items-start gap-[10px] bg-lightGrey rounded-[5px] shadow-2xl"
             >
+              <div>
+                Class ID -{" "}
+                <span className="pl-[10px] text-mainColor font-bold">
+                  {singleClass.id}
+                </span>
+              </div>
               <div className="flex flex-row items-center gap-[15px]">
                 <div>
                   <img src={Logo} className="w-[30px]" alt="" />
                 </div>
                 <div className="flex flex-col">
                   <span>{singleClass.title}</span>
-                  <span>{singleClass.course}</span>
                 </div>
               </div>
-              <span>{singleClass.time}</span>
-              <span>{singleClass.date}</span>
+              <span>Date - {singleClass.date}</span>
+              <span>
+                Time - {singleClass.class_start?.slice(0, -3)} -{" "}
+                {singleClass.class_end?.slice(0, -3)}
+              </span>
               <span>
                 No of students
-                <span className="pl-[10px] text-mainColor font-semibold text-[15px]">
+                <span className="pl-[10px] text-mainColor font-semibold">
                   {singleClass.studentCount}
                 </span>
               </span>
               <span>
                 Teacher ID
-                <span className="pl-[10px] text-mainColor font-semibold text-[15px]">
+                <span className="pl-[10px] text-mainColor font-semibold">
                   {singleClass.teacher_id}
                 </span>
               </span>
               <span>
                 Teacher
-                <span className="pl-[10px] text-mainColor font-semibold text-[15px]">
+                <span className="pl-[10px] text-mainColor font-semibold">
                   {singleClass.teacher}
                 </span>
               </span>
-              <div className="flex flex-row items-center gap-[10px]">
-                <span>Tags</span>
-                <div className="flex flex-row flex-wrap gap-[10px]">
-                  {singleClass.tags.map((tags, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="bg-mainColor text-white px-2 py-1 rounded-[5px]"
-                      >
-                        {tags}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
               <div className="flex flex-row flex-wrap gap-[10px]">
                 {singleClass.studentName.map((student, index) => {
                   return (
