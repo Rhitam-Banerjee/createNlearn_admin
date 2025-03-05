@@ -234,8 +234,8 @@ const NewClass = () => {
           >
             {availableTeachers.map((teacher, index) => {
               return (
-                <option value={teacher} key={index}>
-                  {teacher}
+                <option value={teacher.id} key={index}>
+                  {teacher.name}
                 </option>
               );
             })}
