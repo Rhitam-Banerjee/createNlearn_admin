@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import { Link } from "react-router-dom";
 import { Logo } from "../assets";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -72,12 +71,7 @@ const ClassGrid = () => {
           </div>
         )}
       </div>
-      <Link
-        to={"/create-class"}
-        className="py-2 px-3 bg-mainColor font-semibold !text-white w-max rounded-[5px] cursor-pointer"
-      >
-        Schedule Extra Class/PTM
-      </Link>
+
       <div className="grid grid-cols-3 gap-4 text-[12px] font-semibold">
         {allClasses?.map((singleClass, index) => {
           return (
