@@ -43,7 +43,7 @@ const ClassGrid = () => {
               setClassType(value);
             }}
           >
-            {["All", "upcomming", "past"].map((level, index) => {
+            {["All", "upcomming", "ongoing", "past"].map((level, index) => {
               return (
                 <option value={level} key={index}>
                   {level.toUpperCase()}
@@ -102,6 +102,18 @@ const ClassGrid = () => {
                 No of students
                 <span className="pl-[10px] text-mainColor font-semibold text-[15px]">
                   {singleClass.studentCount}
+                </span>
+              </span>
+              <span>
+                Teacher ID
+                <span className="pl-[10px] text-mainColor font-semibold text-[15px]">
+                  {singleClass.teacher_id}
+                </span>
+              </span>
+              <span>
+                Teacher
+                <span className="pl-[10px] text-mainColor font-semibold text-[15px]">
+                  {singleClass.teacher}
                 </span>
               </span>
               <div className="flex flex-row items-center gap-[10px]">
