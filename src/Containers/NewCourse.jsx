@@ -61,7 +61,11 @@ const NewClass = () => {
   const checkTeacherAvailibility = async () => {
     try {
       const response = await axios
-        .get(`${urls.getTeacherAvailable}?course_details=${formValues}`)
+        .get(
+          `${urls.getTeacherAvailable}?course_details=${JSON.stringify(
+            formValues
+          )}`
+        )
         .then((res) => res.data)
         .catch((err) => console.log(err));
       if (response && response.status) {
