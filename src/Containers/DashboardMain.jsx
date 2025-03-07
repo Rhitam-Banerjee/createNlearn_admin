@@ -22,12 +22,12 @@ const DashboardMain = () => {
     getAllTeacher();
   }, []);
   return (
-    <div className="ml-[200px] w-full h-full min-h-[calc(100vh-60px)] p-[50px]">
+    <div className="ml-[200px] w-full h-full min-h-[calc(100vh-60px)]">
       {activePage === "Courses" ? (
-        <>
+        <div className="p-[50px]">
           <CourseGrid courses={allCourses} />
           <ClassGrid />
-        </>
+        </div>
       ) : (
         <Teachers />
       )}
