@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import urls from "../utils/urls";
 import { setAllClasses } from "../reducers/detailSlice";
+import { Link } from "react-router-dom";
 const ClassGrid = () => {
   const dispatch = useDispatch();
   const { allTeachers, allClasses } = useSelector((store) => store.details);
@@ -128,6 +129,14 @@ const ClassGrid = () => {
                   );
                 })}
               </div>
+              {singleClass.is_complete && (
+                <Link
+                  to={`/feedback/${singleClass.id}`}
+                  className="p-2 !text-white bg-successGreen rounded-[5px] text-[12px] font-bold cursor-pointer"
+                >
+                  View Form
+                </Link>
+              )}
             </div>
           );
         })}

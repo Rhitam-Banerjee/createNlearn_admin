@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import {
   AddTeacher,
+  ClassFeedbackForm,
   CreateClass,
   CreateCourse,
   Dashboard,
@@ -22,6 +23,12 @@ const App = () => {
         <Route path="/create-class" element={<CreateClass />} />
         <Route path="/add-teacher" element={<AddTeacher />} />
         <Route path="/login" element={<Login />} />
+        <Route
+          path="/feedback/:classId"
+          element={
+            isLoggedIn ? <ClassFeedbackForm /> : <Navigate to="/login" />
+          }
+        />
       </Routes>
     </>
   );

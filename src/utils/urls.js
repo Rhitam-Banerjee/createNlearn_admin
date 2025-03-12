@@ -15,5 +15,6 @@ const urls = {
 
   getTeacherAvailable: `${subDomain}/check-teacher-availibility`,
   getTeacherSlots: `${subDomain}/teacher_slots`,
+  getClassDetails: `${subDomain}/get-class-details`,
 };
 export default urls;
