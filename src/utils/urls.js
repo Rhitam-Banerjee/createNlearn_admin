@@ -17,5 +17,6 @@ const urls = {
   getTeacherSlots: `${subDomain}/teacher_slots`,
   getClassDetails: `${subDomain}/get-class-details`,
   postClassFile: `${subDomain}/post-class-file`,
+  postTeacherFile: `${subDomain}/post-teacher-file`,
 };
 export default urls;

@@ -12,6 +12,7 @@ const DashboardMain = () => {
   const { allCourses } = useSelector((store) => store.details);
 
   const [classFile, setClassFile] = useState(null);
+  const [teacherClass, setTeacherClass] = useState(null);
   const [status, setStatus] = useState("idle");
 
   const getAllTeacher = async () => {
@@ -23,14 +24,20 @@ const DashboardMain = () => {
       dispatch(setAllTeachers(response.teachers));
     }
   };
-  const handleFileChange = async (e) => {
+  const handleClassCSV = async (e) => {
     const file = e.target.files;
     if (file) {
       setClassFile(file[0]);
     }
   };
+  const handleTeacherCSV = async (e) => {
+    const file = e.target.files;
+    if (file) {
+      setTeacherClass(file[0]);
+    }
+  };
 
-  const submitForm = async () => {
+  const submitClassForm = async () => {
     if (!classFile) return;
     setStatus("uploading");
     const formData = new FormData();
@@ -51,6 +58,53 @@ const DashboardMain = () => {
       console.log(error);
     }
   };
+  const downloadFile = ({ data, fileName, fileType }) => {
+    const blob = new Blob([data], { type: fileType });
+    const url = window.URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+  };
+  const submitTeacherForm = async () => {
+    if (!teacherClass) return;
+    setStatus("uploading");
+    const formData = new FormData();
+    formData.append("file", teacherClass);
+
+    try {
+      const response = await axios
+        .post(`${urls.postTeacherFile}`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => res.data)
+        .catch((err) => console.log(err));
+      if (response && response.status) {
+        let headers = ["number,teacher,class_name,class_start"];
+        let usersCSV = response.users.reduce((acc, user) => {
+          const { number, teacher, class_name, class_start } = user;
+          acc.push([number, teacher, class_name, class_start].join(","));
+          return acc;
+        }, []);
+        downloadFile({
+          data: [...headers, ...usersCSV].join("\n"),
+          fileName: "users_details.csv",
+          fileType: "text/csv",
+        });
+      }
+      setStatus("success");
+    } catch (error) {
+      setStatus("error");
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     getAllTeacher();
@@ -59,25 +113,43 @@ const DashboardMain = () => {
     <div className="ml-[200px] w-full h-full min-h-[calc(100vh-60px)]">
       {activePage === "Courses" ? (
         <div className="p-[50px]">
-          <form
-            className="mb-[10px] flex flex-row w-full justify-end items-center gap-[20px]"
-            onSubmit={(e) => {
-              e.preventDefault();
-            }}
-          >
-            <div className="ml-auto">Upload Classes</div>
-            <input
-              className="p-2 rounded-[5px]"
-              type="file"
-              onChange={handleFileChange}
-            />
-            {classFile && status !== "uploading" && (
-              <button onClick={submitForm}>Upload</button>
-            )}
-          </form>
+          <div>
+            <form
+              className="mb-[10px] flex flex-row w-full justify-end items-center gap-[20px]"
+              onSubmit={(e) => {
+                e.preventDefault();
+              }}
+            >
+              <div className="ml-auto">Upload Classes</div>
+              <input
+                className="p-2 rounded-[5px]"
+                type="file"
+                onChange={handleClassCSV}
+              />
+              {classFile && status !== "uploading" && (
+                <button onClick={submitClassForm}>Upload</button>
+              )}
+            </form>
+            <form
+              className="mb-[10px] flex flex-row w-full justify-end items-center gap-[20px]"
+              onSubmit={(e) => {
+                e.preventDefault();
+              }}
+            >
+              <div className="ml-auto">Convert Teacher Class</div>
+              <input
+                className="p-2 rounded-[5px]"
+                type="file"
+                onChange={handleTeacherCSV}
+              />
+              {teacherClass && status !== "uploading" && (
+                <button onClick={submitTeacherForm}>Upload</button>
+              )}
+            </form>
+          </div>
           {status === "success" && <p className="mb-[20px]">File Uploaded</p>}
           {status === "error" && (
-            <p className="mb-[20px]">File Upload Failes</p>
+            <p className="mb-[20px]">File Upload Failed</p>
           )}
           <CourseGrid courses={allCourses} />
           <ClassGrid />
