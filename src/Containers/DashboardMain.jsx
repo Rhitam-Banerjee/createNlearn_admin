@@ -91,7 +91,14 @@ const DashboardMain = () => {
         let headers = ["number,teacher,class_name,class_start"];
         let usersCSV = response.details.reduce((acc, user) => {
           const { number, teacher, class_name, class_start } = user;
-          acc.push([number, teacher, class_name, class_start].join(","));
+          acc.push(
+            [
+              `"${number}"`,
+              `"${teacher}"`,
+              `"${class_name}"`,
+              `"${class_start}"`,
+            ].join(",")
+          );
           return acc;
         }, []);
         downloadFile({
