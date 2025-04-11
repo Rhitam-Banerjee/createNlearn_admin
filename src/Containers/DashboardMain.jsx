@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { ClassGrid, CourseGrid, Teachers } from "./";
@@ -60,16 +61,16 @@ const DashboardMain = () => {
   };
   const downloadFile = ({ data, fileName, fileType }) => {
     const blob = new Blob([data], { type: fileType });
-    const url = window.URL.createObjectURL(blob);
+    const url = URL.createObjectURL(blob);
 
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = fileName;
-    document.body.appendChild(a);
-    a.click();
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
 
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   };
   const submitTeacherForm = async () => {
     if (!teacherClass) return;
