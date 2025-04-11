@@ -89,7 +89,7 @@ const DashboardMain = () => {
         .catch((err) => console.log(err));
       if (response && response.status) {
         let headers = ["number,teacher,class_name,class_start"];
-        let usersCSV = response.users.reduce((acc, user) => {
+        let usersCSV = response.details.reduce((acc, user) => {
           const { number, teacher, class_name, class_start } = user;
           acc.push([number, teacher, class_name, class_start].join(","));
           return acc;
